@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <RootNamespace>Modding</RootNamespace>
+        <AssemblyName>Assembly-CSharp.API</AssemblyName>
+        <TargetFramework>net472</TargetFramework>
+        <AssemblyTitle>Hollow Knight Silksong - Mod API Enabled</AssemblyTitle>
+        <Product>Modding API</Product>
+        <Copyright>Copyright © 2021</Copyright>
+        <OutputPath>bin\$(Configuration)\</OutputPath>
+        <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+        <RestorePackagesPath>packages</RestorePackagesPath>
+        <LangVersion>latest</LangVersion>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+      <WarningLevel>5</WarningLevel>
+      <DocumentationFile>bin\Debug\Assembly-CSharp.API.xml</DocumentationFile>
+    </PropertyGroup>
+</Project>
