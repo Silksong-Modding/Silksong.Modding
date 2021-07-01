@@ -94,10 +94,10 @@
 				<SpecificVersion>False</SpecificVersion>
 			</Reference>
 			<Reference Include="UnityEngine">
-			  <HintPath>..\vanilla\UnityEngine.dll</HintPath>
+			  <HintPath>..\Vanilla\UnityEngine.dll</HintPath>
 			</Reference>
 			<Reference Include="UnityEngine.CoreModule">
-			  <HintPath>..\vanilla\UnityEngine.CoreModule.dll</HintPath>
+			  <HintPath>..\Vanilla\UnityEngine.CoreModule.dll</HintPath>
 			</Reference>
 		</ItemGroup>
 
