@@ -21,19 +21,19 @@ namespace Modding
 			switch(type)
 			{
 				case LogType.INFO:
-					if (!SettingsData.logInfo) return;
+					if (!InGameConsoleSettings.logInfo) return;
 					break;
 				case LogType.WARNING:
-					if (!SettingsData.logWarning) return;
+					if (!InGameConsoleSettings.logWarning) return;
 					break;
 				case LogType.ERROR:
-					if (!SettingsData.logError) return;
+					if (!InGameConsoleSettings.logError) return;
 					break;
 				case LogType.FINE:
-					if (!SettingsData.logFine) return;
+					if (!InGameConsoleSettings.logFine) return;
 					break;
 				case LogType.DEBUG:
-					if (!SettingsData.logDebug) return;
+					if (!InGameConsoleSettings.logDebug) return;
 					break;
 			}
 
