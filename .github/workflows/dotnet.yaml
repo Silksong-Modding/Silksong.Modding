@@ -1,0 +1,34 @@
+name: .NET
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build-win:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup Vanilla
+      run: |
+        wget https://files.catbox.moe/e930lb.zip -O Vanilla.zip
+        unzip Vanilla.zip -d Vanilla
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+    - name: Setup ms-build
+      run: sudo apt-get install -y nuget mono-devel mono-xbuild
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build PrePatcher
+      run: |
+        dotnet build PrePatcher -o PrePatcher/Output -p:Configuration=Release
+    - name: Build Assembly-CSharp (Windows)
+      run: |
+        dotnet build Assembly-CSharp -p:SolutionDir=$PWD -p:Configuration=Release
+    - name: Upload Windows Binary
+      uses: actions/upload-artifact@v2
+      with:
+        name: ModdingApiWin
+        path: ./OutputFinal/
