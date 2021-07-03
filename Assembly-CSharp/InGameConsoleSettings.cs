@@ -8,7 +8,8 @@ namespace Modding
 {
 	public class InGameConsoleSettings
 	{
-		public bool UseColouredConsole = false;
+		public bool 
+		public bool useColouredConsole = false;
 		public bool logFine = true;
 		public bool logInfo = true;
 		public bool logDebug = true;
