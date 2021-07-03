@@ -5,6 +5,9 @@ using UnityEngine;
 
 namespace Modding
 {
+	/// <summary>
+	///		The default class that should be extended by all mods
+	/// </summary>
 	public class Mod : IMod
 	{
 		public string GetName()
