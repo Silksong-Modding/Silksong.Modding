@@ -24,9 +24,6 @@ namespace PrePatcher
 				{
 					if(!method.HasBody)continue;
 
-					ILProcessor il = method.Body.GetILProcessor();
-
-					method.Body.SimplifyMacros();
 					method.Body.Optimize();
 					method.Body.OptimizeMacros();
 				}
