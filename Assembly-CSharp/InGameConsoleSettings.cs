@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Modding
+﻿namespace Modding
 {
 	public class InGameConsoleSettings
 	{
-		public bool 
+		public bool showConsoleInGame = false;
 		public bool useColouredConsole = false;
 		public bool logFine = true;
 		public bool logInfo = true;

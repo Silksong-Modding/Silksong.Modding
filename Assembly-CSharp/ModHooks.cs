@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Modding
+﻿namespace Modding
 {
+	/// <summary>
+	///		All hooks exposed by the modding API
+	/// </summary>
 	public class ModHooks
 	{
 		private static GlobalAPISettings _globalSettings;

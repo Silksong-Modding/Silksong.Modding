@@ -1,16 +1,19 @@
 ﻿using Modding.enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Modding
 {
+	/// <summary>
+	///		The class handling everything logging related
+	/// </summary>
 	public class Logger : ILogger
 	{
 		private readonly string loggerName = "";
 
+		/// <summary>
+		///		Constructor for the Logger class
+		/// </summary>
+		/// <param name="name">The name used for this logger</param>
 		public Logger(string name)
 		{
 			loggerName = name;
