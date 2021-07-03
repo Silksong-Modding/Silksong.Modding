@@ -19,23 +19,28 @@ namespace Modding
 			loggerName = name;
 		}
 
-		public void Log(string message, LogType type)
+		/// <summary>
+		///		Log a message to the console
+		/// </summary>
+		/// <param name="message">The message to log</param>
+		/// <param name="level">The level at which the message has to be logged to the console</param>
+		public void Log(string message, LogLevel level)
 		{
-			switch(type)
+			switch(level)
 			{
-				case LogType.INFO:
+				case LogLevel.INFO:
 					if (!ModHooks.GlobalAPISettings.consoleSettings.logInfo) return;
 					break;
-				case LogType.WARNING:
+				case LogLevel.WARNING:
 					if (!ModHooks.GlobalAPISettings.consoleSettings.logWarning) return;
 					break;
-				case LogType.ERROR:
+				case LogLevel.ERROR:
 					if (!ModHooks.GlobalAPISettings.consoleSettings.logError) return;
 					break;
-				case LogType.FINE:
+				case LogLevel.FINE:
 					if (!ModHooks.GlobalAPISettings.consoleSettings.logFine) return;
 					break;
-				case LogType.DEBUG:
+				case LogLevel.DEBUG:
 					if (!ModHooks.GlobalAPISettings.consoleSettings.logDebug) return;
 					break;
 			}
@@ -44,7 +49,7 @@ namespace Modding
 			StringBuilder fileText = new();
 
 			fileText.Append("[");
-			fileText.Append(type.ToString());
+			fileText.Append(level.ToString());
 			fileText.Append("]");
 
 			logText.Append(":");
@@ -59,59 +64,104 @@ namespace Modding
 			fileText.Append(logText.ToString());
 		}
 
-		public void Log(object message, LogType type)
+		/// <summary>
+		///		Log a message to the console
+		/// </summary>
+		/// <param name="message">The message to log</param>
+		/// <param name="level">The level at which the message has to be logged to the console</param>
+		public void Log(object message, LogLevel level)
 		{
-			Log(message.ToString(), type);
+			Log(message.ToString(), level);
 		}
 
+		/// <summary>
+		///		Log a message to the console at debug level
+		/// </summary>
+		/// <param name="message">The message to log</param>
 		public void LogDebug(string message)
 		{
-			Log(message, LogType.DEBUG);
+			Log(message, LogLevel.DEBUG);
 		}
 
+		/// <summary>
+		///		Log a message to the console at debug level
+		/// </summary>
+		/// <param name="message">The message to log</param>
 		public void LogDebug(object message)
 		{
-			Log(message.ToString(), LogType.DEBUG);
+			Log(message.ToString(), LogLevel.DEBUG);
 		}
 
+		/// <summary>
+		///		Log a message to the console at error level
+		/// </summary>
+		/// <param name="message">The message to log</param>
 		public void LogError(string message)
 		{
-			Log(message, LogType.ERROR);
+			Log(message, LogLevel.ERROR);
 		}
 
+		/// <summary>
+		///		Log a message to the console at error level
+		/// </summary>
+		/// <param name="message">The message to log</param>
 		public void LogError(object message)
 		{
-			Log(message.ToString(), LogType.ERROR);
+			Log(message.ToString(), LogLevel.ERROR);
 		}
 
+		/// <summary>
+		///		Log a message to the console at fine level
+		/// </summary>
+		/// <param name="message">The message to log</param>
 		public void LogFine(string message)
 		{
-			Log(message, LogType.FINE);
+			Log(message, LogLevel.FINE);
 		}
 
+		/// <summary>
+		///		Log a message to the console at fine level
+		/// </summary>
+		/// <param name="message">The message to log</param>
 		public void LogFine(object message)
 		{
-			Log(message.ToString(), LogType.FINE);
+			Log(message.ToString(), LogLevel.FINE);
 		}
 
+		/// <summary>
+		///		Log a message to the console at info level
+		/// </summary>
+		/// <param name="message">The message to log</param>
 		public void LogInfo(string message)
 		{
-			Log(message, LogType.INFO);
+			Log(message, LogLevel.INFO);
 		}
 
+		/// <summary>
+		///		Log a message to the console at info level
+		/// </summary>
+		/// <param name="message">The message to log</param>
 		public void LogInfo(object message)
 		{
-			Log(message.ToString(), LogType.INFO);
+			Log(message.ToString(), LogLevel.INFO);
 		}
 
+		/// <summary>
+		///		Log a message to the console at warning level
+		/// </summary>
+		/// <param name="message">The message to log</param>
 		public void LogWarning(string message)
 		{
-			Log(message, LogType.WARNING);
+			Log(message, LogLevel.WARNING);
 		}
 
+		/// <summary>
+		///		Log a message to the console at warning level
+		/// </summary>
+		/// <param name="message">The message to log</param>
 		public void LogWarning(object message)
 		{
-			Log(message.ToString(), LogType.WARNING);
+			Log(message.ToString(), LogLevel.WARNING);
 		}
 	}
 }

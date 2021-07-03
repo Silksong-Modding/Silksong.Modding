@@ -1,6 +1,6 @@
 ﻿namespace Modding.enums
 {
-	public enum LogType : byte
+	public enum LogLevel : byte
 	{
 		INFO,
 		WARNING,
