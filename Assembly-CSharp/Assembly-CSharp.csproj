@@ -23,7 +23,8 @@
 		<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
 			<DebugType>pdbonly</DebugType>
 			<DebugSymbols>true</DebugSymbols>
-			<DocumentationFile>bin\Release\Assembly-CSharp.mm.xml</DocumentationFile>
+			<DocumentationFile></DocumentationFile>
+			<NoWarn>1701;1702</NoWarn>
 		</PropertyGroup>
 
 	<ItemGroup>

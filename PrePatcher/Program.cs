@@ -1,5 +1,4 @@
-﻿using Mono.Cecil.Cil;
-using Mono.Cecil;
+﻿using Mono.Cecil;
 using System;
 using Mono.Cecil.Rocks;
 using System.Linq;
