@@ -23,8 +23,9 @@
 		<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
 			<DebugType>pdbonly</DebugType>
 			<DebugSymbols>true</DebugSymbols>
-			<DocumentationFile></DocumentationFile>
+			<DocumentationFile>bin\Release\Assembly-CSharp.mm.xml</DocumentationFile>
 			<NoWarn>1701;1702</NoWarn>
+			<GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
 		</PropertyGroup>
 
 	<ItemGroup>
