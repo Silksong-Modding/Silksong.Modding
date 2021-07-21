@@ -1,4 +1,4 @@
-﻿using Modding.enums;
+﻿using Modding.Enums;
 using System;
 
 namespace Modding

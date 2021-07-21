@@ -27,12 +27,7 @@ namespace Modding
 			return name;
 		}
 
-		public virtual List<(string, string)> GetPreloadNames()
-		{
-			return new List<(string, string)>();
-		}
-
-		// instead of something like UNKNOWN I think it's best to return the hash of the assembly 
+		// instead of something like UNKNOWN I think it's best to return the hash of the assembly to be able to distinguish between versions
 		public virtual string GetVersion()
 		{
 			Assembly asm = Assembly.GetCallingAssembly();
@@ -54,14 +49,6 @@ namespace Modding
 			return ret;
 		}
 
-		public virtual void Initialize()
-		{
-			throw new NotImplementedException();
-		}
-
-		public virtual void Initialize(Dictionary<string, Dictionary<string, GameObject>> preloadedObjects)
-		{
-			throw new NotImplementedException();
-		}
+		public abstract void Initialize();
 	}
 }

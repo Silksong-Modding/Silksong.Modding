@@ -1,4 +1,4 @@
-﻿namespace Modding.enums
+﻿namespace Modding.Enums
 {
 	public enum LogLevel : byte
 	{

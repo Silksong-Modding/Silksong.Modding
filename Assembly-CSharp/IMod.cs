@@ -10,12 +10,8 @@ namespace Modding
 	{
 		string GetName();
 
-		List<(string, string)> GetPreloadNames();
+		string GetVersion();
 
 		void Initialize();
-
-		void Initialize(Dictionary<string, Dictionary<string, GameObject>> preloadedObjects);
-
-		string GetVersion();
 	}
 }
