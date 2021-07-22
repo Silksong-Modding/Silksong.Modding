@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 
 //This isn't an enum, but can be treated as one in my opinion
-
 namespace Modding.Enums
 {
 	class AssemblyTypeAttribute : Attribute

@@ -29,21 +29,37 @@ namespace Modding
 
 			if (SystemInfo.operatingSystem.Contains("Windows"))
 			{
-				path = Application.dataPath + "\\Managed\\Mods";
+				
 			}
 			else if (SystemInfo.operatingSystem.Contains("Mac"))
 			{
-				path = Application.dataPath + "/Resources/Data/Managed/Mods/";
+				
 			}
 			else if (SystemInfo.operatingSystem.Contains("Linux"))
 			{
-				path = Application.dataPath + "/Managed/Mods";
+				
 			}
 
 			if(path.IsNullOrEmptyOrWhitespace())
 			{
 				loaded = true;
 				yield break;
+			}
+
+			switch(SystemInfo.operatingSystem)
+			{
+				case string a when a.Contains("Windows"):
+					path = Application.dataPath + "\\Managed\\Mods";
+					break;
+				case string b when b.Contains("Mac"):
+					path = Application.dataPath + "/Resources/Data/Managed/Mods/";
+					break;
+				case string c when c.Contains("Linux"):
+					path = Application.dataPath + "/Managed/Mods";
+					break;
+				default:
+					loaded = true;
+					yield break;
 			}
 		}
 	}
