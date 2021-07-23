@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Configuration.Assemblies;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -53,69 +54,78 @@ namespace Modding
 				yield break;
 			}
 
-			string[] files = Directory.GetFiles(modPath, "*.dll");
+			string[] files = Directory.GetFiles(modPath, "*.dll", SearchOption.AllDirectories).Where(directory => !directory.ToUpper().Contains("DISABLED")).ToArray();
 
 			Assembly Resolve(object sender, ResolveEventArgs args)
 			{
-				var asm_name = new AssemblyName(args.Name);
+				AssemblyName assemblyName = new AssemblyName(args.Name);
 
-				if (files.FirstOrDefault(x => x.EndsWith($"{asm_name.Name}.dll")) is string path)
+				if (files.FirstOrDefault(x => x.EndsWith($"{assemblyName.Name}.dll")) is string path)
+				{
 					return Assembly.LoadFrom(path);
+				}
 
 				return null;
 			}
 
 			AppDomain.CurrentDomain.AssemblyResolve += Resolve;
 
-			foreach (string assemblyPath in files)
+			foreach (string path in files)
 			{
-				try
-				{
-					foreach (Type type in Assembly.LoadFrom(assemblyPath).GetTypes())
-					{
-						if (!(type.IsClass || type.IsAbstract || !type.IsSubclassOf(typeof(Mod))))
-						{
-							continue;
-						}
+				LoadMod(path);
+			}
 
-						try
-						{
-							if (type.GetConstructor(new Type[0])?.Invoke(new object[0]) is Mod mod)
-							{
-								AddModInstance(
-									type,
-									new ModInstance
-									{
-										Mod = mod,
-										Enabled = false,
-										Error = null,
-										Name = mod.GetName()
-									}
-								);
-							}
-						}
-						catch (Exception e)
+			loaded = true;
+		}
+
+		internal static IEnumerator LoadMod(string path)
+		{
+			try
+			{
+				foreach (Type type in Assembly.LoadFrom(path).GetTypes())
+				{
+					if (!(type.IsClass || type.IsAbstract || !type.IsSubclassOf(typeof(Mod))))
+					{
+						continue;
+					}
+
+					try
+					{
+						if (type.GetConstructor(new Type[0])?.Invoke(new object[0]) is Mod mod)
 						{
 							AddModInstance(
 								type,
 								new ModInstance
 								{
-									Mod = null,
+									Mod = mod,
 									Enabled = false,
-									Error = ModErrorState.Construct,
-									Name = type.Name
+									Error = null,
+									Name = mod.GetName()
 								}
 							);
 						}
 					}
-				}
-				catch (Exception e)
-				{
-					
+					catch (Exception e)
+					{
+						AddModInstance(
+							type,
+							new ModInstance
+							{
+								Mod = null,
+								Enabled = false,
+								Error = ModErrorState.Construct,
+								Name = type.Name
+							}
+						);
+						Debug.Log(e);
+					}
 				}
 			}
-
-			loaded = true;
+			catch (Exception e)
+			{
+				Debug.Log(e);
+			}
+			yield break;
 		}
 	}
 }
