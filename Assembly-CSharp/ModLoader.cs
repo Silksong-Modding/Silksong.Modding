@@ -120,6 +120,11 @@ namespace Modding
 						Debug.Log(e);
 					}
 				}
+
+				foreach(ModInstance modInstance in ModInstances)
+				{
+					modInstance.Mod.Initialize();
+				}
 			}
 			catch (Exception e)
 			{
