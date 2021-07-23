@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Modding
 {
-	public abstract class Mod : Logging, IMod
+	public abstract class Mod : IMod
 	{
 		private readonly string name;
 

@@ -6,7 +6,7 @@ namespace Modding
 	/// <summary>
 	///		The interface inplemented by all mods
 	/// </summary>
-	public interface IMod : ILogger
+	public interface IMod
 	{
 		string GetName();
 
