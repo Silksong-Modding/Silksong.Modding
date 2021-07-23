@@ -2,7 +2,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Configuration.Assemblies;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -12,7 +11,9 @@ namespace Modding
 {
 	internal class ModLoader
 	{
-
+		/// <summary>
+		/// Wheter mods have finished loading
+		/// </summary>
 		public static bool loaded;
 
 		public static Dictionary<Type, ModInstance> ModInstanceTypeMap { get; private set; } = new();
