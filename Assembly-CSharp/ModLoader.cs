@@ -18,15 +18,18 @@ namespace Modding
 		public static Dictionary<string, ModInstance> ModInstanceNameMap { get; private set; } = new();
 		public static HashSet<ModInstance> ModInstances { get; private set; } = new();
 
-		private static void AddModInstance(Type ty, ModInstance mod)
+		private static void AddModInstance(Type type, ModInstance mod)
 		{
-			ModInstanceTypeMap[ty] = mod;
+			Debug.Log(mod.Name);
+			ModInstanceTypeMap[type] = mod;
 			ModInstanceNameMap[mod.Name] = mod;
 			ModInstances.Add(mod);
 		}
 
 		internal static IEnumerator LoadMods(GameObject coroutineHolder)
 		{
+
+			Debug.Log("loading");
 			if(loaded)
 			{
 				//log that mods already have been loaded and that the method was called twice
@@ -55,7 +58,9 @@ namespace Modding
 				yield break;
 			}
 
-			string[] files = Directory.GetDirectories(modPath).SelectMany(dir => Directory.GetFiles(dir, "*.dll")).ToArray();
+			string[] files = Directory.GetFiles(modPath, "*.dll");
+
+			Debug.Log(files.Length);
 
 			Assembly Resolve(object sender, ResolveEventArgs args)
 			{
