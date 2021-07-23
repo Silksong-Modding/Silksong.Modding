@@ -28,17 +28,12 @@ namespace Modding
 
 		internal static IEnumerator LoadMods(GameObject coroutineHolder)
 		{
-
-			Debug.Log("loading");
 			if(loaded)
 			{
-				//log that mods already have been loaded and that the method was called twice
+				Debug.Log("Mods have already been loaded. Something went wrong.");
 				UnityEngine.Object.Destroy(coroutineHolder);
 				yield break;
 			}
-
-			
-			
 
 			string modPath = SystemInfo.operatingSystemFamily switch
 			{
@@ -60,8 +55,6 @@ namespace Modding
 
 			string[] files = Directory.GetFiles(modPath, "*.dll");
 
-			Debug.Log(files.Length);
-
 			Assembly Resolve(object sender, ResolveEventArgs args)
 			{
 				var asm_name = new AssemblyName(args.Name);
@@ -80,9 +73,10 @@ namespace Modding
 				{
 					foreach (Type type in Assembly.LoadFrom(assemblyPath).GetTypes())
 					{
-						if (!type.IsClass || type.IsAbstract || !type.IsSubclassOf(typeof(Mod)))
+						if (!(type.IsClass || type.IsAbstract || !type.IsSubclassOf(typeof(Mod))))
+						{
 							continue;
-
+						}
 
 						try
 						{
