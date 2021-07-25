@@ -26,6 +26,10 @@ namespace Modding
 		}
 
 		// instead of something like UNKNOWN I think it's best to return the hash of the assembly to be able to distinguish between versions
+		/// <summary>
+		/// A function to get the version of a mod
+		/// </summary>
+		/// <returns>The version of the mod in the form of a string</returns>
 		public virtual string GetVersion()
 		{
 			Assembly asm = Assembly.GetCallingAssembly();
