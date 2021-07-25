@@ -6,10 +6,20 @@ using System.Text;
 
 namespace Modding
 {
+	/// <summary>
+	/// The default class to be inherited by all mods
+	/// </summary>
 	public abstract class Mod : IMod
 	{
+		/// <summary>
+		/// The name of the mod inheriting this class
+		/// </summary>
 		private readonly string name;
 
+		/// <summary>
+		/// The constructor for every mod
+		/// </summary>
+		/// <param name="name">The name of the mod. Defaults to the name of the class</param>
 		protected Mod(string name = null)
 		{
 			if(string.IsNullOrEmpty(name) || string.IsNullOrWhiteSpace(name))
@@ -55,6 +65,9 @@ namespace Modding
 			return ret;
 		}
 
+		/// <summary>
+		/// A function called on the initialization of the mod
+		/// </summary>
 		public abstract void Initialize();
 	}
 }

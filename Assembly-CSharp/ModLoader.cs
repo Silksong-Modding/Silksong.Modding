@@ -1,4 +1,5 @@
 ﻿using Modding.Enums;
+using Modding.Structs;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,6 +10,9 @@ using UnityEngine;
 
 namespace Modding
 {
+	/// <summary>
+	/// The class responsible for loading all mods
+	/// </summary>
 	internal class ModLoader
 	{
 		/// <summary>
@@ -16,11 +20,25 @@ namespace Modding
 		/// </summary>
 		public static bool loaded;
 
-		public static Dictionary<Type, ModInstance> ModInstanceTypeMap { get; private set; } = new();
-		public static Dictionary<string, ModInstance> ModInstanceNameMap { get; private set; } = new();
-		public static List<ModInstance> ModInstances { get; private set; } = new();
+		/// <summary>
+		/// A dictionary containing references to all mod types and their related ModInstance
+		/// </summary>
+		public static Dictionary<Type, ModInstance> ModInstanceTypeMap { get; private set; } = new Dictionary<Type, ModInstance>();
+		/// <summary>
+		/// A dictionary containing references to all mod names and their related ModInstance
+		/// </summary>
+		public static Dictionary<string, ModInstance> ModInstanceNameMap { get; private set; } = new Dictionary<string, ModInstance>();
+		/// <summary>
+		/// A list containing references to all ModInstances
+		/// </summary>
+		public static List<ModInstance> ModInstances { get; private set; } = new List<ModInstance>();
 
-		private static void AddModInstance(Type type, ModInstance mod)
+		/// <summary>
+		/// A function to add the modinstance to all dictionaries and lists
+		/// </summary>
+		/// <param name="type">The type of the mod</param>
+		/// <param name="mod"></param>
+		internal static void AddModInstance(Type type, ModInstance mod)
 		{
 			Debug.Log(mod.Name);
 			ModInstanceTypeMap[type] = mod;
@@ -28,6 +46,11 @@ namespace Modding
 			ModInstances.Add(mod);
 		}
 
+		/// <summary>
+		/// A function that loads all mods
+		/// </summary>
+		/// <param name="coroutineHolder">The GameObject containing all coroutines</param>
+		/// <returns></returns>
 		internal static IEnumerator LoadMods(GameObject coroutineHolder)
 		{
 			if(loaded)
@@ -89,6 +112,11 @@ namespace Modding
 			loaded = true;
 		}
 
+		/// <summary>
+		/// A function that loads a mod
+		/// </summary>
+		/// <param name="path">The path to the mod</param>
+		/// <returns></returns>
 		internal static IEnumerator LoadMod(string path)
 		{
 			try
@@ -102,6 +130,11 @@ namespace Modding
 			yield break;
 		}
 
+		/// <summary>
+		/// A function that tries to call the constructor of a mod
+		/// </summary>
+		/// <param name="path">The path to the mod</param>
+		/// <returns></returns>
 		internal static IEnumerator TryConstructMod(string path)
 		{
 			foreach (Type type in Assembly.LoadFrom(path).GetTypes())
