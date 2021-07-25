@@ -2,12 +2,11 @@
 
 namespace Modding
 {
-	public class ModInstance
+	public struct ModInstance
 	{
 		public IMod Mod;
 
 		public string Name;
 		public ModErrorState? Error;
-		public bool Enabled;
 	}
 }

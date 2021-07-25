@@ -18,7 +18,7 @@ namespace Modding
 
 		public static Dictionary<Type, ModInstance> ModInstanceTypeMap { get; private set; } = new();
 		public static Dictionary<string, ModInstance> ModInstanceNameMap { get; private set; } = new();
-		public static HashSet<ModInstance> ModInstances { get; private set; } = new();
+		public static List<ModInstance> ModInstances { get; private set; } = new();
 
 		private static void AddModInstance(Type type, ModInstance mod)
 		{
@@ -71,10 +71,20 @@ namespace Modding
 
 			AppDomain.CurrentDomain.AssemblyResolve += Resolve;
 
+			Debug.Log("Loading mods");
+
 			foreach (string path in files)
 			{
 				LoadMod(path);
 			}
+
+			Debug.Log("Finished loading mods");
+
+			Debug.Log("Initializing mods");
+
+			TryInitializeMod();
+
+			Debug.Log("Finished initializing mods");
 
 			loaded = true;
 		}
@@ -83,55 +93,73 @@ namespace Modding
 		{
 			try
 			{
-				foreach (Type type in Assembly.LoadFrom(path).GetTypes())
-				{
-					if (!(type.IsClass || type.IsAbstract || !type.IsSubclassOf(typeof(Mod))))
-					{
-						continue;
-					}
-
-					try
-					{
-						if (type.GetConstructor(new Type[0])?.Invoke(new object[0]) is Mod mod)
-						{
-							AddModInstance(
-								type,
-								new ModInstance
-								{
-									Mod = mod,
-									Enabled = false,
-									Error = null,
-									Name = mod.GetName()
-								}
-							);
-						}
-					}
-					catch (Exception e)
-					{
-						AddModInstance(
-							type,
-							new ModInstance
-							{
-								Mod = null,
-								Enabled = false,
-								Error = ModErrorState.Construct,
-								Name = type.Name
-							}
-						);
-						Debug.Log(e);
-					}
-				}
-
-				foreach(ModInstance modInstance in ModInstances)
-				{
-					modInstance.Mod.Initialize();
-				}
+				TryConstructMod(path);
 			}
 			catch (Exception e)
 			{
 				Debug.Log(e);
 			}
 			yield break;
+		}
+
+		internal static IEnumerator TryConstructMod(string path)
+		{
+			foreach (Type type in Assembly.LoadFrom(path).GetTypes())
+			{
+				if (!(type.IsClass || type.IsAbstract || !type.IsSubclassOf(typeof(Mod))))
+				{
+					continue;
+				}
+
+				try
+				{
+					if (type.GetConstructor(new Type[0])?.Invoke(new object[0]) is Mod mod)
+					{
+						AddModInstance(
+							type,
+							new ModInstance
+							{
+								Mod = mod,
+								Error = null,
+								Name = mod.GetName()
+							}
+						);
+					}
+				}
+				catch (Exception e)
+				{
+					AddModInstance(
+						type,
+						new ModInstance
+						{
+							Mod = null,
+							Error = ModErrorState.Construct,
+							Name = type.Name
+						}
+					);
+					Debug.Log(e);
+				}
+			}
+			yield break;
+		}
+
+		internal static IEnumerator TryInitializeMod()
+		{
+			for (int i = 0; i < ModInstances.Count; i++)
+			{
+				ModInstance instance = ModInstances[i];
+				if (instance.Error == ModErrorState.Construct) yield break;
+
+				try
+				{
+					instance.Mod.Initialize();
+				}
+				catch (Exception e)
+				{
+					instance.Error = ModErrorState.Initialize;
+					Debug.Log(e.StackTrace);
+				}
+			}
 		}
 	}
 }
