@@ -20,6 +20,10 @@ namespace Modding
 			this.name = name;
 		}
 
+		/// <summary>
+		/// A funtion to get the name of a mod
+		/// </summary>
+		/// <returns>The name of a mod</returns>
 		public virtual string GetName()
 		{
 			return name;
