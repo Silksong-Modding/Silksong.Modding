@@ -143,6 +143,9 @@ namespace Modding
 			yield break;
 		}
 
+		/// <summary>
+		/// Attempt to call the initialize function of a mod
+		/// </summary>
 		internal static IEnumerator TryInitializeMod()
 		{
 			for (int i = 0; i < ModInstances.Count; i++)
