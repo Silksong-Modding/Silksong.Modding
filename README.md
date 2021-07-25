@@ -10,4 +10,4 @@ Get the latest build for [windows](https://nightly.link/Silksong-Modding/Silkson
 
 ## Contributors
 
-<a href="https://github.com/Silksong-Modding/Silksong.Modding/contributors"><img src="https://opencollective.com/imglab/contributors.svg?width=890&button=false" /></a>
+Mandar1jn
