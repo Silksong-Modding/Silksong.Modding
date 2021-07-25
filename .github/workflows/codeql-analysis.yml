@@ -40,6 +40,11 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
+      
+    - name: Setup Vanilla
+      run: |
+        wget https://files.catbox.moe/cndll6.zip -O Vanilla.zip
+        unzip Vanilla.zip -d Vanilla
 
     # Initializes the CodeQL tools for scanning.
     - name: Initialize CodeQL
