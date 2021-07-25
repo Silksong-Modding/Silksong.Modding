@@ -98,7 +98,7 @@ namespace Modding
 
 			foreach (string path in files)
 			{
-				LoadMod(path);
+				TryConstructMod(path);
 			}
 
 			Debug.Log("Finished loading mods");
@@ -113,65 +113,50 @@ namespace Modding
 		}
 
 		/// <summary>
-		/// A function that loads a mod
-		/// </summary>
-		/// <param name="path">The path to the mod</param>
-		/// <returns></returns>
-		internal static IEnumerator LoadMod(string path)
-		{
-			try
-			{
-				TryConstructMod(path);
-			}
-			catch (Exception e)
-			{
-				Debug.Log(e);
-			}
-			yield break;
-		}
-
-		/// <summary>
 		/// A function that tries to call the constructor of a mod
 		/// </summary>
 		/// <param name="path">The path to the mod</param>
 		/// <returns></returns>
 		internal static IEnumerator TryConstructMod(string path)
 		{
-			foreach (Type type in Assembly.LoadFrom(path).GetTypes())
+			try
 			{
-				if (!(type.IsClass || type.IsAbstract || !type.IsSubclassOf(typeof(Mod))))
+				foreach (Type type in Assembly.LoadFrom(path).GetTypes())
 				{
-					continue;
-				}
-
-				try
-				{
-					if (type.GetConstructor(new Type[0])?.Invoke(new object[0]) is Mod mod)
+					if (!(type.IsClass || type.IsAbstract || !type.IsSubclassOf(typeof(Mod))))
 					{
-						AddModInstance(
-							type,
+						continue;
+					}
+
+					try
+					{
+						if (type.GetConstructor(new Type[0])?.Invoke(new object[0]) is Mod mod)
+						{
+							AddModInstance(type,
+								new ModInstance
+								{
+									Mod = mod,
+									Error = null,
+									Name = mod.GetName()
+								});
+						}
+					}
+					catch (Exception e)
+					{
+						AddModInstance(type,
 							new ModInstance
 							{
-								Mod = mod,
-								Error = null,
-								Name = mod.GetName()
-							}
-						);
+								Mod = null,
+								Error = ModErrorState.Construct,
+								Name = type.Name
+							});
+						Debug.Log(e);
 					}
 				}
-				catch (Exception e)
-				{
-					AddModInstance(
-						type,
-						new ModInstance
-						{
-							Mod = null,
-							Error = ModErrorState.Construct,
-							Name = type.Name
-						}
-					);
-					Debug.Log(e);
-				}
+			}
+			catch (Exception e)
+			{
+				Debug.Log(e);
 			}
 			yield break;
 		}
