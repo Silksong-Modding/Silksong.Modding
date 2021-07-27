@@ -34,10 +34,7 @@ namespace Modding
 		/// A funtion to get the name of a mod
 		/// </summary>
 		/// <returns>The name of a mod</returns>
-		public virtual string GetName()
-		{
-			return name;
-		}
+		public virtual string GetName() => name;
 
 		// instead of something like UNKNOWN I think it's best to return the hash of the assembly to be able to distinguish between versions
 		/// <summary>
