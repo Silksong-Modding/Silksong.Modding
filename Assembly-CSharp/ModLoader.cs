@@ -121,16 +121,16 @@ namespace Modding
 		{
 			try
 			{
-				foreach (Type type in Assembly.LoadFrom(path).GetTypes())
+				foreach(Type type in Assembly.LoadFrom(path).GetTypes())
 				{
-					if (!(type.IsClass || type.IsAbstract || !type.IsSubclassOf(typeof(Mod))))
+					if(!(type.IsClass || type.IsAbstract || !type.IsSubclassOf(typeof(Mod))))
 					{
 						continue;
 					}
 
 					try
 					{
-						if (type.GetConstructor(new Type[0])?.Invoke(new object[0]) is Mod mod)
+						if(type.GetConstructor(new Type[0])?.Invoke(new object[0]) is Mod mod)
 						{
 							AddModInstance(type,
 								new ModInstance
@@ -166,7 +166,7 @@ namespace Modding
 		/// </summary>
 		internal static IEnumerator TryInitializeMod()
 		{
-			for (int i = 0; i < ModInstances.Count; i++)
+			for(int i = 0; i < ModInstances.Count; i++)
 			{
 				ModInstance instance = ModInstances[i];
 				if (instance.Error == ModErrorState.Construct) yield break;

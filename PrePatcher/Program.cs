@@ -9,7 +9,7 @@ namespace PrePatcher
 	{
 		static void Main(string[] args)
 		{
-			if (args.Length < 2)
+			if(args.Length < 2)
 			{
 				Console.WriteLine("Usage: PrePatcher.exe <Original> <Patched>");
 				return;
@@ -17,11 +17,11 @@ namespace PrePatcher
 
 			using ModuleDefinition module = ModuleDefinition.ReadModule(args[0]);
 
-			foreach (TypeDefinition type in module.Types.Where(type => type.HasMethods))
+			foreach(TypeDefinition type in module.Types.Where(type => type.HasMethods))
 			{
-				foreach (MethodDefinition method in type.Methods)
+				foreach(MethodDefinition method in type.Methods)
 				{
-					if(!method.HasBody)continue;
+					if(!method.HasBody) continue;
 
 					method.Body.Optimize();
 					method.Body.OptimizeMacros();
